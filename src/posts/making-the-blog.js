@@ -177,7 +177,7 @@ github workflows can run commands for us, we just need to tell it to. Luckily, w
             target_branch: gh-pages
             build_dir: dist
           env:
-            GITHUB_TOKEN: ${{ secrets.PUBLISHING_TOKEN }}
+            GITHUB_TOKEN: \${{ secrets.PUBLISHING_TOKEN }}
 
 Easy. Mind you, you have to remember to actually make the PAT in github and add it to your repository secrets. But with that in place I had a working site.
 
