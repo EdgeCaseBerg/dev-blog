@@ -1,8 +1,19 @@
 <template>
   <b-container>
-    <h1>Hi Dev Blog</h1>
     <b-row>
-      <b-col v-for="post in posts" :key="post.id">
+      <b-col>
+        <h1>Developer's Blog</h1>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <p>
+          When I work on something kinda neat, sometimes I write about it.
+        </p>
+      </b-col>
+    </b-row>
+    <b-row v-for="(postGroup, gIdx) in postGroups" :key="gIdx">
+      <b-col v-for="post in postGroup" :key="post.id">
         <router-link :to="`/dev-blog/${post.id}`">
         <b-card :title="post.title">
           <b-card-text>
@@ -17,12 +28,21 @@
 
 <script>
 const posts = require('../posts/meta.js')
-console.log(posts)
 export default {
   name: "DevBlog",
   data () {
+    const columns = 4
     return {
-      posts: posts
+      columns,
+      postGroups: posts.reduce((accum, currentValue) => {
+        if (accum[accum.length - 1].length == columns) {
+          accum.push([currentValue])
+        } else {
+          const group = accum[accum.length - 1]
+          group.push(currentValue)
+        }
+        return accum
+      }, [[]])
     }
   }
 };
