@@ -1,15 +1,19 @@
 {
+  "homepage": "https://edgecaseberg.github.io/dev-blog",
   "name": "devblog",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "predeploy" : "npm run build",
+    "deploy" : "gh-pages -d dist"
   },
   "dependencies": {
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.6.5",
+    "gh-pages": "^3.2.3",
     "markdown-it": "^12.2.0",
     "vue": "^2.6.11",
     "vue-router": "^3.5.2"
