@@ -15,7 +15,7 @@
     <b-row v-for="(postGroup, gIdx) in postGroups" :key="gIdx">
       <b-col v-for="post in postGroup" :key="post.id">
         <router-link :to="`/dev-blog/${post.id}`">
-        <b-card :title="post.title">
+        <b-card :title="post.title" :sub-title="post.date">
           <b-card-text>
             {{ post.summary }}
           </b-card-text>
