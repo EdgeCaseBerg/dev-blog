@@ -145,7 +145,10 @@ This library uses properties set in the _package.json_ file and some script comm
       "deploy" : "gh-pages -d dist"
       ...
 
-Once that was done I could now run \`npm run deploy\` to push things up to github pages.
+Once that was done I could now run \`npm run deploy\` to push things up to github pages. Which was great besides the fact that I saw a white screen. After
+inspecting the page I realized the includes were trying to load from the root directory which is github.io, but I need it to load from the name of my repo
+since github pages sites prefix the path wih the repository name. Luckily, a little bit of googling turned up the [publicPath option in Vue] and once I set
+that, things started working as expected.
 
 ### Automatically
 
@@ -196,6 +199,7 @@ G'night.
 [some hype music]:https://www.youtube.com/watch?v=vgASRm9Du7U
 [someone already made a shared workflow anyone can use]:https://github.com/crazy-max/ghaction-github-pages
 [reading the code here]:https://github.com/EdgeCaseBerg/dev-blog
+[publicPath option in Vue]:https://cli.vuejs.org/config/#publicpath
 `;
 module.exports = {
   content
