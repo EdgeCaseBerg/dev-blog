@@ -149,13 +149,53 @@ Once that was done I could now run \`npm run deploy\` to push things up to githu
 
 ### Automatically
 
-github workflows :)
+But I'm far too lazy to remember to do that. It'd be better if I could just constantly push stuff up and call it a day so that my git push is my deploy.
+Living dangerously I know, but when it comes to a personal blog I really don't care about that kind of QA cluttering up my stream of consciousness. So,
+github workflows can run commands for us, we just need to tell it to. Luckily, we don't need to reinvent the wheel here (though I tried first) since
+[someone already made a shared workflow anyone can use]. So, after some trial and error, I finally got this:
+
+    name: publish-gh-pages
+    on:
+      push:
+        branches:
+        - master
+    jobs:
+      deploy:
+        runs-on: ubuntu-latest
+        steps:
+        - uses: actions/checkout@v2
+        - uses: actions/setup-node@v2
+          with:
+            node-version: '14'
+            cache: 'npm'
+        - run: npm install
+        - run: npm run build
+        -
+          name: Deploy to GitHub Pages
+          uses: crazy-max/ghaction-github-pages@v2
+          with:
+            target_branch: gh-pages
+            build_dir: dist
+          env:
+            GITHUB_TOKEN: ${{ secrets.PUBLISHING_TOKEN }}
+
+Easy. Mind you, you have to remember to actually make the PAT in github and add it to your repository secrets. But with that in place I had a working site.
+
+## Wrapping up.
+
+At this point my right eye started twitching and I realized that it was 2:47AM and I had started in on this project sometime around an hour ago when I had decided I wanted to blog 
+about my experiencing with Cocos creator. One thing led to another and instead of writing about Cocos I ended up writing about Vue and making a blog platform for myself. So, I'm off
+to bed but I hope that if you read this far you found out something useful. If you didn't by reading this blog, then maybe you could by [reading the code here].
+
+G'night.
 
 [Cocos Creator]:https://www.bookstack.cn/read/cocos-creator-3.3-en/5880ef9ce7a58296.md
 [reacting to params changes]:https://router.vuejs.org/guide/essentials/dynamic-matching.html#reacting-to-params-changes
 [found out]:https://vueschool.io/articles/vuejs-tutorials/lazy-loading-and-code-splitting-in-vue-js/
 [this extension for chrome]:https://chrome.google.com/webstore/detail/web-server-for-chrome/ofhbbkphhbklhfoeikjpcbhemlocgigb?hl=en
 [some hype music]:https://www.youtube.com/watch?v=vgASRm9Du7U
+[someone already made a shared workflow anyone can use]:https://github.com/crazy-max/ghaction-github-pages
+[reading the code here]:https://github.com/EdgeCaseBerg/dev-blog
 `;
 module.exports = {
   content
