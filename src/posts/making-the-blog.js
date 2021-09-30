@@ -133,6 +133,24 @@ to make the markdownit global for use anywhere within Vue.
 Now that the blog post is rendering, my next step besides adding some text and style to the non-blog pages is to get this thing somewhere where it can be read.
 Luckily, I recently did this at work and know that there's an npm package for publishing to github pages that was super easy to use.
 
+    npm install gh-pages
+
+This library uses properties set in the _package.json_ file and some script commands to decide what's getting published where but it's really easy.
+
+    "homepage": "https://edgecaseberg.github.io/dev-blog",
+    ...
+    "scripts": {
+      ...
+      "predeploy" : "npm run build",
+      "deploy" : "gh-pages -d dist"
+      ...
+
+Once that was done I could now run \`npm run deploy\` to push things up to github pages.
+
+### Automatically
+
+github workflows :)
+
 [Cocos Creator]:https://www.bookstack.cn/read/cocos-creator-3.3-en/5880ef9ce7a58296.md
 [reacting to params changes]:https://router.vuejs.org/guide/essentials/dynamic-matching.html#reacting-to-params-changes
 [found out]:https://vueschool.io/articles/vuejs-tutorials/lazy-loading-and-code-splitting-in-vue-js/
