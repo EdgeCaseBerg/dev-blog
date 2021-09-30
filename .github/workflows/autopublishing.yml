@@ -13,4 +13,12 @@ jobs:
         node-version: '14'
         cache: 'npm'
     - run: npm install
-    - run: npm run deploy
+    - run: npm build
+    -
+      name: Deploy to GitHub Pages
+      uses: crazy-max/ghaction-github-pages@v2
+      with:
+        target_branch: gh-pages
+        build_dir: dist
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
