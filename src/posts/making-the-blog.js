@@ -72,15 +72,73 @@ and also creating the file _posts/making-the-blog.js_ like this
     };
 
 this worked out and rendered as expected, but I was stuck wondering if there was a way I could avoid duplicating my efforts here. After about 5 minutes of thinking about it
-I came up with a solution that would work and only introduce one extra file into the mix. 
+I came up with a solution that would work and only introduce one extra file into the mix. I commited my files to git in case I screwed things up, threw on [some hype music]
+and got to work. First, I added _posts/index.js_ and then moved my posts array from my component into it. I ran into weirdness and assumed it had something to do with the 
+file name, so I swapped it to meta.js and then found out that if you use \`import\` then you get a promise, but if you use \`require\` you get exactly what you have being
+exported from the file. Using require, I could now import the shared meta list in both my listing component, and use it in my post component to find and retrieve the meta
+data for the post. Bam. DRY metadata for my files.
+
+    const postIndex = require('../posts/meta')
+    loadPageData(id) {
+      let meta = null
+      for (let index = 0; index < postIndex.length; index++) {
+        meta = postIndex[index];
+        if (meta.id === id) {
+          break;
+        }
+      }
+      
+      if (!meta) {
+        this.title = 'No Post Here'
+        this.summary = "Looks like you've loaded a post that doesn't exist?"
+        this.content = "Try navigating back home and see if you can find your way back."
+        return
+      }
+
+      const pageContent = import (\`../posts/\${id}\`)
+      
+      const clone = this
+      pageContent.then((pageData) => {
+          clone.title = meta.title
+          clone.summary = meta.summary
+          clone.content = md.render(pageData.content)
+      })
+    }
+
+The \`loadPage\` method got longer but hey, at least I don't have to manage multiple title and summary elements.
+
+## What about rendering the page itself?
+
+Markdown is my favorite way to write blog posts. I don't really care about flavor of markdown most of the time, so I grabbed the first one I could find
+
+    npm install markdown-it
+
+and then calling it is pretty easy:
+
+    const MarkdownIt = require('markdown-it')
+    const md = new MarkdownIt()
+    ...
+    md.render(pageData.content)
+
+my only real concern at the moment is that I require the markdown and create a new instance of the markdownIt library within the component each time.
+It's not really a concern because the vue router documentation says:
+
+> One thing to note when using routes with params is that when the user navigates from /user/foo to /user/bar, the same component instance will be reused.
+
+which means that the require probably only happens once. But if I _was_ more concerned or didn't know that, I would have probably written up a quick Vue plugin
+to make the markdownit global for use anywhere within Vue.
+
+### Publishing to github pages
+
+Now that the blog post is rendering, my next step besides adding some text and style to the non-blog pages is to get this thing somewhere where it can be read.
+Luckily, I recently did this at work and know that there's an npm package for publishing to github pages that was super easy to use.
 
 [Cocos Creator]:https://www.bookstack.cn/read/cocos-creator-3.3-en/5880ef9ce7a58296.md
 [reacting to params changes]:https://router.vuejs.org/guide/essentials/dynamic-matching.html#reacting-to-params-changes
 [found out]:https://vueschool.io/articles/vuejs-tutorials/lazy-loading-and-code-splitting-in-vue-js/
 [this extension for chrome]:https://chrome.google.com/webstore/detail/web-server-for-chrome/ofhbbkphhbklhfoeikjpcbhemlocgigb?hl=en
+[some hype music]:https://www.youtube.com/watch?v=vgASRm9Du7U
 `;
 module.exports = {
-    title: "Making the blog",
-    summary: "About how I made this site with Vue",
-    content
-  };
+  content
+};

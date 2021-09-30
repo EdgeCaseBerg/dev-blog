@@ -19,7 +19,7 @@
 <script>
 const MarkdownIt = require('markdown-it')
 const md = new MarkdownIt()
-
+const postIndex = require('../posts/meta')
 export default {
   name: "DevBlogPost",
   data() {
@@ -37,15 +37,31 @@ export default {
       next()
   },
   methods: {
-      loadPageData(id) {
-        const pageDataImport = import (`../posts/${id}`)
-        const clone = this
-        pageDataImport.then((pageData) => {
-            clone.title = pageData.title
-            clone.summary = pageData.summary
-            clone.content = md.render(pageData.content)
-        })
+    loadPageData(id) {
+      let meta = null
+      for (let index = 0; index < postIndex.length; index++) {
+        meta = postIndex[index];
+        if (meta.id === id) {
+          break;
+        }
       }
+
+      if (!meta) {
+        this.title = 'No Post Here'
+        this.summary = "Looks like you've loaded a post that doesn't exist?"
+        this.content = "Try navigating back home and see if you can find your way back."
+        return
+      }
+
+      const pageContent = import (`../posts/${id}`)
+      
+      const clone = this
+      pageContent.then((pageData) => {
+          clone.title = meta.title
+          clone.summary = meta.summary
+          clone.content = md.render(pageData.content)
+      })
+    }
   },
   mounted () {
       const postId = this.$route.params.id

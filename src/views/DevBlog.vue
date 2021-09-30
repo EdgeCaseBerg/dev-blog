@@ -16,17 +16,13 @@
 </template>
 
 <script>
+const posts = require('../posts/meta.js')
+console.log(posts)
 export default {
   name: "DevBlog",
   data () {
     return {
-      posts: [
-        {
-          id: 'making-the-blog',
-          title: 'Making the Blog',
-          summary: 'Using Vue JS to make a quick static site blogging platform for myself in a couple of hours.'
-        }
-      ]
+      posts: posts
     }
   }
 };
