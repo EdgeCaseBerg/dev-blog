@@ -6,12 +6,13 @@ Note that I'm not really doing anything smart here, just blogging my thoughts as
 typescript and try to translate from Unity to Cocos for the sake of learning a little bit more about Cocos. For your own good, it might help if you 
 watch Sebastion's video first. [You can do so here].
 
-The finished code for this little project can be found [here on Github].
+The finished code for this little project can be found [here on Github]. The blog post is not a tutorial, but just noting the few places I got tripped up
+and where I discovered something I didn't know.
 
 ### Setup
 
 First things first, I made a new project, selected 3D since I knew that one day if I manage to follow all the steps in the youtube tutorial, 
-I'd be doing something 3d-ish, and I didn't want to have to figure out how to change from 2d to 3d later. Next, I ran into the obvious issue
+I'd be doing something 3d-ish, and I didn't want to have to figure out how to change from 2d to 3d later... assuming there is one. Next, I ran into the obvious issue
 of following a C# unity tutorial and trying to convert it into a CocosCreator typescript program. Considering that I don't program regularly
 in either of these languages, I figured this would be a good learning experience, and it didn't take too long before I was running into my first
 issue. 
@@ -20,15 +21,22 @@ About 2 minutes into the [first video] I saw Sebastian's use of the range type. 
 little bit but didn't find anything similar in cocos. So, I settled in on a plain number, but out of curiousity, I tried playing around with the
 property annotation, and to my surprise this worked:
 
-    @property({type: CCInteger, range: [0, 100, 1], slide: true})
+    @property({type: CCInteger, min: 0, max: 100})
     public randomFillPercent: number = 40;
 
 ![Screenshot of range working in cocos](/dev-blog/post-images/following-a-unity-tutorial-in-cocos-creator/property-min-max.png "Min and max declared")
 
+
 It took about 10 minutes of searching the net to actually [find the documentation about this] by the way. I thought that cocos, since it appeared
 in windows visual studio as a possible game engine on the project start page I saw before, was more mature, but eh... I'm starting to rethink that.
 But not rethinking it enough to back out of my hope to follow Sebastian's tutorial in this engine. So, with a decent reference to the API documents
-for coco, and google as my ally for learning more typescript, I set off.
+for coco, and google as my ally for learning more typescript, I continued on. After a little more reading I found out that there was an actual range
+property and that I could make the component in the Cocos UI become an actual slider like this
+
+    @property({type: CCInteger, range: [0, 100, 1], slide: true})
+    public randomFillPercent: number = 40;
+
+Pretty neat. Moving on, I watched the video as Sebastian started making his representation of the world.
 
 ### Random Numbers
 
@@ -36,9 +44,9 @@ Nothing special about the array used to keep track of the color of the map piece
 
     map: Array<Array<number>> = [[0,0]];
 
-however when I wanted to fill the map with a random 1 or 0 based on a seed value I ran into the problem that Javascript and therefore Typescript is
-lacking this functionality. Luckily, [StackoverFlow appears to have me covered] so after staring a little bit and deciding that I didn't care to understand
-the math, I tossed the pieces together into a simple class
+however when I wanted to fill the map with a random 1 or 0 based on a seed value I ran into a problem. Javascript, and therefore Typescript, doesn't let
+you seed a random number generator. There's no built ins for this like you'd find in JVM based languages.  Luckily, [StackoverFlow appears to have me covered]
+so after staring a little bit and deciding that I didn't care to understand the math, I tossed the pieces together into a simple class
 
     class PseudoRandom {
         private seed: string;
@@ -93,7 +101,7 @@ Then I was able to populate my array data like so
 
         let pseudoRandom = new PseudoRandom(this.seed);
 
-        /* Figure out random seeding... it's not built in */
+        /* Random seeding */
         for (let x = 0; x < this.width; x++) {
             for (let y = 0; y < this.height; y++) {
                 this.map[x][y] = (pseudoRandom.next(0, 100) < this.randomFillPercent) ? 1 : 0;
@@ -102,7 +110,7 @@ Then I was able to populate my array data like so
     }
 
 Feeling pretty good now, I watched the next few seconds of the video and ran into a new problem. The heck is a [Gizmo]?
-Reading the first paragraph, I found out it's just a debugging tool. So, ignoring that, I continued watching the video 
+Reading the first paragraph of the docs, I found out it's just a debugging tool. So, ignoring that, I continued watching the video 
 and implemented the wallcount function and the smoothing function. At that point, I was done besides needing to take the
 youtube comments about smoothing into consideration, but before that, I really needed to deal with the fact that Cocos
 doesn't _have_ a Gizmo at all. So, instead, my thought was to use what I learned in the basic game tutorial and make a prefab
@@ -112,7 +120,7 @@ Luckily, the prefab cube is a 1x1x1 thing which means that it pretty much corres
 surprisingly easy:
 
 
-    /* Debugging code (I think?) */
+    /* Debugging code */
     @property({type: Prefab})
     public cubePrefab: Prefab = null;
 
