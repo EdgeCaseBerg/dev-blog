@@ -18,7 +18,7 @@
 
 <script>
 const MarkdownIt = require('markdown-it')
-const md = new MarkdownIt()
+const md = new MarkdownIt({html: true})
 const postIndex = require('../posts/meta')
 export default {
   name: "DevBlogPost",
@@ -70,4 +70,17 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style>
+blockquote {
+  font-style: italic;
+  padding-left: 2em;
+}
+pre {
+  padding-left: 2em;
+  font-family: monospace;
+}
+img, video {
+  max-width: 90%;
+}
+
+</style>
