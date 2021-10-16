@@ -207,7 +207,7 @@ have helped me resolve more things. I'm also curious if I could just generate th
 the export function added an extra 3 seconds of silence to the end of two of my three files was a nonobvious issue to me.
 
 
-
+[Sebastion Lagues cave tutorials]:https://www.youtube.com/playlist?list=PLFt_AvWsXl0eZgMK_DT5_biRkWXftAOf9
 [a poor tea kettle cry]:https://www.youtube.com/watch?v=9nmt7DzGCUU
 [the unity sound documentation]:https://docs.unity3d.com/ScriptReference/30_search.html?q=sound
 [AudioSource]:https://docs.unity3d.com/ScriptReference/AudioSource.html
