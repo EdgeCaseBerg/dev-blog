@@ -22,5 +22,11 @@ module.exports = [
         title: 'Layering sound as progress is achieved',
         summary: 'Inspired by Celeste\'s use of progressive sound to indicate progress/changing moods, I wanted to give this a try',
         date: '2021-10-16'
+    },
+    {
+        id: 'falling-blocks',
+        title: 'Falling Blocks Game in Unity',
+        summary: 'More of Sebastian Lague\'s tutorials, a little game where you dodge blocks falling at you.',
+        date: '2021-11-07'
     }
 ]
