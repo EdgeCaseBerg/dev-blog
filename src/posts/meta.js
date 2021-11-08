@@ -28,5 +28,11 @@ module.exports = [
         title: 'Falling Blocks Game in Unity',
         summary: 'More of Sebastian Lague\'s tutorials, a little game where you dodge blocks falling at you.',
         date: '2021-11-07'
+    },
+    {
+        id: 'stealth-game',
+        title: 'Unity Stealth Game',
+        summary: 'More of Sebastian Lague\'s tutorials, dodge the guards, collect coins, make it to the goal.',
+        date: '2021-11-07'
     }
 ]
