@@ -43,7 +43,7 @@ I had fun, and that caps off the tutorial for his Introduction to Game Developme
 my todo list and think about trying his platformer series or something else. I'll keep you all udpated on any more
 coding adventures I take in unity. If you're interested in seeing the code, you can see it [here on github].
 
-[the tutorial for falling blocks]:falling-blocks.js
+[the tutorial for falling blocks]:#/dev-blog/falling-blocks
 [tutorial series]:https://www.youtube.com/watch?v=jUdx_Nj4Xk0&list=PLFt_AvWsXl0fnA91TcmkRyhhixX9CO3Lw&index=24
 [here on github]:https://github.com/EdgeCaseBerg/unity-stealth-game
 `;
