@@ -34,5 +34,11 @@ module.exports = [
         title: 'Unity Stealth Game',
         summary: 'More of Sebastian Lague\'s tutorials, dodge the guards, collect coins, make it to the goal.',
         date: '2021-11-07'
+    },
+    {
+        id: 'encoding-indices-for-flashcards',
+        title: 'Saving progress in a flashcard app in 1 value',
+        summary: 'Recently I made a flashcard app to study Japanese, the card number grew and I found myself wishing it saved my progress without using a database.',
+        date: '2022-03-24'
     }
 ]
